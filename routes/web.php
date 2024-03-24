@@ -1,10 +1,15 @@
 <?php
 
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\ArticlesController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PhotoController;
 
-Route::get('/hello', function () {
-    return 'Hello World';
-});
+Route::get('/hello', [WelcomeController::class,'hello']); 
+
 
 Route::get('/world', function(){
     return 'world';
@@ -36,3 +41,24 @@ Route::get('/user/{name?}', function($name='jhon') {
 
 Route::get('/user/profile', function() {
 })->name('profile');
+
+Route::get('/index',[PageController::class,'index']);
+
+Route::get('/about',[PageController::class,'about']);
+
+Route::get('/articles/{id}',[PageController::class,'articles']);
+
+Route::get('/index',[HomeController::class,'index']);
+
+Route::get('/about',[AboutController::class,'about']);
+
+Route::get('/articles/{id}',[ArticlesController::class,'articles']);
+
+Route::resource('photos',PhotoController::class);
+
+Route::resource('photos', PhotoController::class)->only([
+    'index', 'show']);
+
+Route::resource('photos', PhotoController::class)->except([
+ 'create', 'store', 'update', 'destroy'
+]);
